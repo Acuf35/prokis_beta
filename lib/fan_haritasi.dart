@@ -50,7 +50,6 @@ class FanHaritasiState extends State<FanHaritasi> {
   int _degerNo=0;
 
   double _oran1;
-  double _oran12;
 
 
 //--------------------------DATABASE DEĞİŞKENLER--------------------------------
