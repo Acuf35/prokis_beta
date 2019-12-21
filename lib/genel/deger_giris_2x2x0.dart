@@ -12,8 +12,9 @@ class DegerGiris2X2X0 extends StatefulWidget {
   int deger=0;
   double oran;
   String dilSecimi;
+  String noBaslik;
 
-  DegerGiris2X2X0.Deger( int onLarFan, int birLerFan, int onLarOut, int birLerOut, int deGerNo, double o, String gelenDil){
+  DegerGiris2X2X0.Deger( int onLarFan, int birLerFan, int onLarOut, int birLerOut, int deGerNo, double o, String gelenDil,String baslik){
 
 
 
@@ -25,13 +26,14 @@ class DegerGiris2X2X0 extends StatefulWidget {
     deger=deGerNo;
     oran=o;
     dilSecimi=gelenDil;
+    noBaslik=baslik;
   }
 
 
 
 
   @override
-  _DegerGiris2X2X0State createState() => new _DegerGiris2X2X0State.Deger(XFan, YFan, XOut, YOut, deger, oran,dilSecimi);
+  _DegerGiris2X2X0State createState() => new _DegerGiris2X2X0State.Deger(XFan, YFan, XOut, YOut, deger, oran,dilSecimi,noBaslik);
 }
 
 
@@ -50,8 +52,9 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
   int degerNo=0;
   double oran;
   String dilSecimi;
+  String noBaslik;
 
-  _DegerGiris2X2X0State.Deger(int x1,int y1 , int x2, int y2, int t, double o,String gelenDil){
+  _DegerGiris2X2X0State.Deger(int x1,int y1 , int x2, int y2, int t, double o,String gelenDil, String baslik){
     
     onlarF=x1;
     onlarF1=x1;
@@ -64,6 +67,7 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
     degerNo=t;
     oran=o;
     dilSecimi=gelenDil;
+    noBaslik=baslik;
   }
 
 
@@ -84,7 +88,7 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
 
             Expanded(child: Column(
               children: <Widget>[
-                Text(SelectLanguage().selectStrings(dilSecimi, "tv34"),style: TextStyle(fontFamily: 'Kelly Slab', color: Colors.white),),
+                Text(SelectLanguage().selectStrings(dilSecimi, noBaslik),style: TextStyle(fontFamily: 'Kelly Slab', color: Colors.white),),
                 Row(mainAxisAlignment: MainAxisAlignment.center,
                   children: <Widget>[
 

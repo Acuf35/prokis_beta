@@ -76,6 +76,9 @@ flutter:
   - assets/images/duvar_icon.png
   - assets/images/deger_artir_icon.png
   - assets/images/deger_dusur_icon.png
+  - assets/images/onarka_duvar_gri_icon.png
+  - assets/images/sagsol_duvar_gri_icon.png
+  - assets/images/klepe_harita_icon.png
 
   # To add assets to your application, add an assets section, like this:
   # assets:

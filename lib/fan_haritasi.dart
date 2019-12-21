@@ -7,6 +7,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prokos_beta/adetler.dart';
+import 'package:prokos_beta/klepe_haritasi.dart';
 import 'package:prokos_beta/mh_yontemi.dart';
 import 'package:toast/toast.dart';
 import 'genel/alert_reset.dart';
@@ -103,7 +104,6 @@ class FanHaritasiState extends State<FanHaritasi> {
 //--------------------------EKRAN BÜYÜKLÜĞÜ ORANI--------------------------------
 
 //++++++++++++++++++++++++++SCAFFOLD+++++++++++++++++++++++++++++++
-    var fanHaritaUnsur = _fanHaritaUnsur(18);
     return Scaffold(
         body: Column(
       children: <Widget>[
@@ -711,7 +711,7 @@ class FanHaritasiState extends State<FanHaritasi> {
                           onPressed: () {
 
                             _resetAlert(dilSecimi);
-                            
+
                           },
                           highlightColor: Colors.green,
                           splashColor: Colors.red,
@@ -811,13 +811,13 @@ class FanHaritasiState extends State<FanHaritasi> {
                           Toast.show(SelectLanguage().selectStrings(dilSecimi, "toast27"), context,duration: 3);
 
                         }else{
-/*
+
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => MhYontemi(dilSecimi)),
+                              builder: (context) => KlepeHaritasi(dilSecimi)),
                         );
-*/
+
 
                         }
 
@@ -960,7 +960,7 @@ class FanHaritasiState extends State<FanHaritasi> {
 
 
 
-        return DegerGiris2X2X0.Deger(_onlarFan,_birlerFan,_onlarOut,_birlerOut,_degerNo,_oran1,dilSecimi);
+        return DegerGiris2X2X0.Deger(_onlarFan,_birlerFan,_onlarOut,_birlerOut,_degerNo,_oran1,dilSecimi,"tv34");
 
       },
 
@@ -1061,7 +1061,8 @@ class FanHaritasiState extends State<FanHaritasi> {
                                                 fit: BoxFit.contain,
                                               ),
                                             ),
-                                        ), opacity: fanVisibility[indexNo] && haritaOnay && fanHarita[indexNo]==2 ? 0.6 : 1,
+                                        ),
+                                         opacity: fanVisibility[indexNo] && haritaOnay && fanHarita[indexNo]==2 ? 0.6 : 1,
                                           ),
                                           
                                           Visibility(

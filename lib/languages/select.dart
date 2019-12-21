@@ -59,6 +59,9 @@ class SelectLanguage{
     kod=="tv35" ? metin='ÇIKIŞ NO' : null;
     kod=="tv36" ? metin='Şifre uyuşması :' : null;
     kod=="tv37" ? metin='Harita sıfırlanacak! Emin misiniz?' : null;
+    kod=="tv38" ? metin='Klepe Haritası' : null;
+    kod=="tv39" ? metin='Klp:' : null;
+    kod=="tv40" ? metin='KLEPE NO' : null;
 
 
    
@@ -135,6 +138,9 @@ class SelectLanguage{
     kod=="toast25" ? metin='Aynı Fan No iki farklı fan için tanımlanmış! Lütfen kontrol ediniz' : null;
     kod=="toast26" ? metin='Aynı Çıkış No iki farklı çıkış için tanımlanmış! Lütfen kontrol ediniz' : null;
     kod=="toast27" ? metin='Lütfen önce tanımladığınız verileri gönderiniz!' : null;
+    kod=="toast28" ? metin='Aynı Klepe No iki farklı klepe için tanımlanmış! Lütfen kontrol ediniz' : null;
+    kod=="toast29" ? metin='Haritada seçilen klepe sayısı, tanımlanandan eksik!' : null;
+    kod=="toast30" ? metin='Haritada seçilen klepe sayısı, tanımlanandan fazla!' : null;
     
 
 
@@ -193,6 +199,9 @@ class SelectLanguage{
     kod=="tv35" ? metin='OUT NO' : null;
     kod=="tv36" ? metin='Password match :' : null;
     kod=="tv37" ? metin='The map will reset! Are you sure?' : null;
+    kod=="tv38" ? metin='Klepe Map' : null;
+    kod=="tv39" ? metin='Klp:' : null;
+    kod=="tv40" ? metin='KLEPE NO' : null;
 
     
 
@@ -271,6 +280,9 @@ class SelectLanguage{
     kod=="toast25" ? metin='Same Fan Number assigned for two different fan! Please check.' : null;
     kod=="toast26" ? metin='Same Out Number assigned for two different fan! Please check.' : null;
     kod=="toast27" ? metin='Please firstly send defined data!' : null;
+    kod=="toast28" ? metin='Same Klepe Number assigned for two different klepe! Please check.' : null;
+    kod=="toast29" ? metin='Number of selected klepes are less then the defined!!' : null;
+    kod=="toast30" ? metin='Number of selected klepes are more then the defined!' : null;
 
 
     //endregion

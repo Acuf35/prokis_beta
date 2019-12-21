@@ -6,6 +6,7 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prokos_beta/adetler.dart';
 import 'package:prokos_beta/fan_yontemi.dart';
+import 'package:prokos_beta/klepe_haritasi.dart';
 import 'package:prokos_beta/kumes_olustur.dart';
 import 'package:prokos_beta/uz_debi_nem.dart';
 import 'package:toast/toast.dart';
@@ -136,7 +137,7 @@ class DilSecimiState extends State<DilSecimi> {
               Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => KumesOlustur(dilSecimi)),
-          //MaterialPageRoute(builder: (context) => UzDebiNem(dilSecimi)),
+          //MaterialPageRoute(builder: (context) => KlepeHaritasi(dilSecimi)),
         );
             },color: Colors.black,)),
             Spacer(flex: 1,),

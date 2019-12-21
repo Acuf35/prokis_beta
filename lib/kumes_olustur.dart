@@ -571,10 +571,6 @@ class KumesOlusturState extends State<KumesOlustur> {
                                               context,
                                               duration: 2);
                                         }else{
-Toast.show(
-                                              "Deneme",
-                                              context,
-                                              duration: 2);
 
 
                                           _veriGonderSifre(
