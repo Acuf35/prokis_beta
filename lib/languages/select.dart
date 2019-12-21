@@ -15,7 +15,7 @@ class SelectLanguage{
 
     String metin="0kod";
 
-    kod=='slogan' ? metin='Programlanabilir Kümes Kontrol Sistemi' : null;
+    kod=='slogan' ? metin='Programlanabilir Kümes İklimlendirme Sistemi' : null;
 
     kod=='pdiag1' ? metin='Kontrol ediliyor…' : null;
     kod=='cbox2' ? metin='Kurulum ayarlarını sistemden çek' : null;
@@ -58,6 +58,7 @@ class SelectLanguage{
     kod=="tv34" ? metin='FAN NO' : null;
     kod=="tv35" ? metin='ÇIKIŞ NO' : null;
     kod=="tv36" ? metin='Şifre uyuşması :' : null;
+    kod=="tv37" ? metin='Harita sıfırlanacak! Emin misiniz?' : null;
 
 
    
@@ -68,6 +69,13 @@ class SelectLanguage{
     //region BUTTON
 
     kod=="btn1" ? metin='ONAYLA' : null;
+    kod=="btn2" ? metin='ONAY' : null;
+    kod=="btn3" ? metin='ÇIKIŞ' : null;
+    kod=="btn4" ? metin='Harita Onay' : null;
+    kod=="btn5" ? metin='Harita Sıfırla ' : null;
+    kod=="btn6" ? metin='Verileri Gönder' : null;
+    kod=="btn7" ? metin='EVET' : null;
+    kod=="btn8" ? metin='HAYIR' : null;
     
     //endregion
 
@@ -123,7 +131,11 @@ class SelectLanguage{
     kod=="toast21" ? metin='Yeni şifre onaylandı' : null;
     kod=="toast22" ? metin='Min. Hav. kontrol yöntemlerinden en az biri seçilmiş olmalıdır!' : null;
     kod=="toast23" ? metin='Klepe kontrol yöntemlerinden en az biri seçilmiş olmalıdır!' : null;
-    kod=="toast24" ? metin='Boşta' : null;
+    kod=="toast24" ? metin='Lütfen seçili tüm fanlar için sıfırdan farklı Fan No ve Çıkış No tanımlayınız!' : null;
+    kod=="toast25" ? metin='Aynı Fan No iki farklı fan için tanımlanmış! Lütfen kontrol ediniz' : null;
+    kod=="toast26" ? metin='Aynı Çıkış No iki farklı çıkış için tanımlanmış! Lütfen kontrol ediniz' : null;
+    kod=="toast27" ? metin='Lütfen önce tanımladığınız verileri gönderiniz!' : null;
+    
 
 
     //endregion
@@ -137,7 +149,7 @@ class SelectLanguage{
 
     String metin="0kod";
 
-    kod=='slogan' ? metin='Programmable Poultry Control System' : null;
+    kod=='slogan' ? metin='Programmable Poultry Air Conditioning System' : null;
 
     kod=='pdiag1' ? metin='Checking…' : null;
     kod=='cbox2' ? metin='Receive setup installation' : null;
@@ -180,6 +192,7 @@ class SelectLanguage{
     kod=="tv34" ? metin='FAN NO' : null;
     kod=="tv35" ? metin='OUT NO' : null;
     kod=="tv36" ? metin='Password match :' : null;
+    kod=="tv37" ? metin='The map will reset! Are you sure?' : null;
 
     
 
@@ -191,6 +204,13 @@ class SelectLanguage{
     //region BUTTON
 
     kod=="btn1" ? metin='APPROVE' : null;
+    kod=="btn2" ? metin='OKEY' : null;
+    kod=="btn3" ? metin='EXIT' : null;
+    kod=="btn4" ? metin='Approve Map' : null;
+    kod=="btn5" ? metin='Reset Map' : null;
+    kod=="btn6" ? metin='Send Data' : null;
+    kod=="btn7" ? metin='YES' : null;
+    kod=="btn8" ? metin='NO' : null;
     
 
     //endregion
@@ -247,7 +267,10 @@ class SelectLanguage{
     kod=="toast21" ? metin='New password approved' : null;
     kod=="toast22" ? metin='One of Min. Vent. Control Method must be selected!' : null;
     kod=="toast23" ? metin='One of Klepe Control Method must be selected!' : null;
-    kod=="toast24" ? metin='boşta' : null;
+    kod=="toast24" ? metin='Please define Fan Number and Output number as nonzero for all selected fans' : null;
+    kod=="toast25" ? metin='Same Fan Number assigned for two different fan! Please check.' : null;
+    kod=="toast26" ? metin='Same Out Number assigned for two different fan! Please check.' : null;
+    kod=="toast27" ? metin='Please firstly send defined data!' : null;
 
 
     //endregion

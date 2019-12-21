@@ -9,6 +9,7 @@ import 'package:flutter/widgets.dart';
 import 'package:prokos_beta/adetler.dart';
 import 'package:prokos_beta/mh_yontemi.dart';
 import 'package:toast/toast.dart';
+import 'genel/alert_reset.dart';
 import 'genel/cikis_alert.dart';
 import 'genel/database_helper.dart';
 import 'genel/deger_giris_2x2x0.dart';
@@ -50,6 +51,9 @@ class FanHaritasiState extends State<FanHaritasi> {
   int _degerNo=0;
 
   double _oran1;
+  bool veriGonderildi=false;
+  bool fanNoTekerrur=false;
+  bool cikisNoTekerrur=false;
 
 
 //--------------------------DATABASE DEĞİŞKENLER--------------------------------
@@ -665,11 +669,10 @@ class FanHaritasiState extends State<FanHaritasi> {
 
                               String veri="";
 
-                              for(int i=1001;i<=1120;i++){
-                                dbHelper.veriYOKSAekleVARSAguncelle(i, fanHarita[i-1000].toString(), "0", "0", "0");
-                                veri=veri+fanHarita[i-1000].toString()+"#";
+                              for(int i=1;i<=120;i++){
+                                veri=veri+fanHarita[i].toString()+"#";
                               }
-                              dbHelper.veriYOKSAekleVARSAguncelle(1121, "1", "0", "0", "0");
+                              dbHelper.veriYOKSAekleVARSAguncelle(14, "ok", veri, "0", "0");
                               
                               _veriGonder("12", "19", veri, "0", "0", "0");
 
@@ -691,7 +694,7 @@ class FanHaritasiState extends State<FanHaritasi> {
                                 size: 30,
                               ),
                               Text(
-                                "Harita Onay",
+                                SelectLanguage().selectStrings(dilSecimi, "btn4"),
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
@@ -706,25 +709,9 @@ class FanHaritasiState extends State<FanHaritasi> {
                       maintainAnimation: true,
                                               child: FlatButton(
                           onPressed: () {
-                            for (int i = 1; i <= 120; i++) {
-                              fanHarita[i] = 0;
-                              fanNo[i]=0;
-                              cikisNo[i]=0;
-                              fanVisibility[i] = true;
-                            }
-                            for (int i = 1; i <= 12; i++) {
-                                sutun[i] = true;
-                              }
-                            haritaOnay = false;
 
-                            for(int i=1001;i<=1120;i++){
-                                dbHelper.veriYOKSAekleVARSAguncelle(i, "0", "0", "0", "0");
-                              }
-                              dbHelper.veriYOKSAekleVARSAguncelle(1121, "0", "0", "0", "0");
-                              _veriGonder("12", "19", "0", "0", "0", "0");
-
-                          setState(() {});
-
+                            _resetAlert(dilSecimi);
+                            
                           },
                           highlightColor: Colors.green,
                           splashColor: Colors.red,
@@ -736,7 +723,7 @@ class FanHaritasiState extends State<FanHaritasi> {
                                 size: 30,
                               ),
                               Text(
-                                "Harita Sıfırla",
+                                SelectLanguage().selectStrings(dilSecimi, "btn5"),
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
@@ -751,11 +738,37 @@ class FanHaritasiState extends State<FanHaritasi> {
                       maintainAnimation: true,
                                               child: FlatButton(
                           onPressed: () {
-                            Toast.show(dbSatirSayisi.toString(), context,duration: 5);
+                            bool noKontrol=false;
+                            String cikisVeri="";
+                            String noVeri="";
+                            for(int i =1; i<=120; i++){
+                              if(fanHarita[i]==2){
+                                if(fanNo[i]==0 || cikisNo[i]==0){
+                                  noKontrol=true;
+                                }
+                              }
+                              cikisVeri=cikisVeri+cikisNo[i].toString()+"#";
+                              noVeri=noVeri+fanNo[i].toString()+"#";
+                            }
+                            if(noKontrol){
+                              Toast.show(SelectLanguage().selectStrings(dilSecimi, "toast24"), context,duration: 3);
+                            }else if(fanNoTekerrur){
+                              Toast.show(SelectLanguage().selectStrings(dilSecimi, "toast25"), context,duration: 3);
+
+                            }else if(cikisNoTekerrur){
+                              Toast.show(SelectLanguage().selectStrings(dilSecimi, "toast26"), context,duration: 3);
+
+                            }else{
+                              veriGonderildi=true;
+                              _veriGonder("13", "20", noVeri, cikisVeri, "0", "0");
+                              dbHelper.veriYOKSAekleVARSAguncelle(15, "ok", noVeri, cikisVeri, "0");
+                            }
+                              
+
                           },
                           highlightColor: Colors.green,
                           splashColor: Colors.red,
-                          color: Colors.white,
+                          color:veriGonderildi ? Colors.green[500] : Colors.blue,
                           child: Row(
                             children: <Widget>[
                               Icon(
@@ -763,7 +776,7 @@ class FanHaritasiState extends State<FanHaritasi> {
                                 size: 30,
                               ),
                               Text(
-                                "Verileri Gönder",
+                                SelectLanguage().selectStrings(dilSecimi, "btn6"),
                                 style: TextStyle(fontSize: 18),
                               ),
                             ],
@@ -793,6 +806,11 @@ class FanHaritasiState extends State<FanHaritasi> {
                       icon: Icon(Icons.arrow_forward_ios),
                       iconSize: 50 * oran,
                       onPressed: () {
+
+                        if(!veriGonderildi){
+                          Toast.show(SelectLanguage().selectStrings(dilSecimi, "toast27"), context,duration: 3);
+
+                        }else{
 /*
                         Navigator.push(
                           context,
@@ -800,6 +818,9 @@ class FanHaritasiState extends State<FanHaritasi> {
                               builder: (context) => MhYontemi(dilSecimi)),
                         );
 */
+
+                        }
+
                       },
                       color: Colors.black,
                     )),
@@ -830,17 +851,18 @@ class FanHaritasiState extends State<FanHaritasi> {
       fanAdet = int.parse(satirlar[3]["veri1"]);
     }
 
-
-    if(dbSatirSayisi>133){
-      if(satirlar[133]["veri1"]=="1"){
-      
-      for(int i=1;i<=120;i++ ){
-        fanHarita[i]=int.parse(satirlar[i+12]["veri1"]);
-        if(satirlar[i+12]["veri1"]!="0"){
+    if (dbSatirSayisi > 13) {
+      if(satirlar[13]["veri1"]=="ok"){
+        veriGonderildi=true;
+        String xx=satirlar[13]["veri2"];
+        var fHaritalar = xx.split("#");
+        for(int i=1;i<=120;i++ ){
+          fanHarita[i]=int.parse(fHaritalar[i-1]);
+          if(fHaritalar[i-1]!="0"){
           haritaOnay=true;
-        }
       }
-
+      
+    }
 
       for (int i = 1; i <= 12; i++) {
       sutun[i] = false;
@@ -881,6 +903,24 @@ class FanHaritasiState extends State<FanHaritasi> {
 
     }
     
+    }
+
+    if (dbSatirSayisi > 14) {
+      String xx;
+      String yy;
+      
+      if(satirlar[14]["veri1"]=="ok"){
+        xx=satirlar[14]["veri2"];
+        yy=satirlar[14]["veri3"];
+        var fanNolar=xx.split("#");
+        var cikisNolar=yy.split("#");
+        for(int i=1;i<=120;i++){
+          fanNo[i]=int.parse(fanNolar[i-1]);
+          cikisNo[i]=int.parse(cikisNolar[i-1]);
+        }
+
+      }
+      
     }
     
 
@@ -925,6 +965,9 @@ class FanHaritasiState extends State<FanHaritasi> {
       },
 
     ).then((val){
+      if(_onlarFan!=val[0] || _birlerFan!=val[1] ||_onlarOut!=val[2] || _birlerOut!=val[3]){
+        veriGonderildi=false;
+      }
       _onlarFan=val[0];
       _birlerFan=val[1];
       _onlarOut=val[2];
@@ -934,6 +977,29 @@ class FanHaritasiState extends State<FanHaritasi> {
       
       fanNo[_degerNo]=int.parse(_onlarFan.toString()+_birlerFan.toString());  
       cikisNo[_degerNo]=int.parse(_onlarOut.toString()+_birlerOut.toString());
+      fanNoTekerrur=false;
+      cikisNoTekerrur=false;
+
+      for(int i=1;i<=120;i++){
+        
+        for(int k=1;k<=120;k++){
+          if(i!=k && fanNo[i]==fanNo[k] && fanNo[i]!=0 && fanNo[k]!=0){
+            fanNoTekerrur=true;
+            break;
+          }
+          if(fanNoTekerrur){
+            break;
+          }
+          if(i!=k && cikisNo[i]==cikisNo[k] && cikisNo[i]!=0 && cikisNo[k]!=0){
+            cikisNoTekerrur=true;
+            break;
+          }
+          if(cikisNoTekerrur){
+            break;
+          }
+        }
+      }
+      
       
       
 
@@ -1121,6 +1187,47 @@ _veriGonder(String dbKod,String id, String v1, String v2, String v3, String v4) 
     }
   }
 
+
+Future _resetAlert(String x) async {
+    // flutter defined function
+
+    await showDialog(
+      barrierDismissible: false,
+      context: context,
+      builder: (BuildContext context) {
+        // return object of type Dialog
+
+        return ResetAlert.deger(x);
+      },
+    ).then((val){
+
+      if(val){
+        
+
+                            veriGonderildi=false;
+                            for (int i = 1; i <= 120; i++) {
+                              fanHarita[i] = 0;
+                              fanNo[i]=0;
+                              cikisNo[i]=0;
+                              fanVisibility[i] = true;
+                            }
+                            for (int i = 1; i <= 12; i++) {
+                                sutun[i] = true;
+                              }
+                            haritaOnay = false;
+
+                            
+                              dbHelper.veriYOKSAekleVARSAguncelle(14, "0", "0", "0", "0");
+                              dbHelper.veriYOKSAekleVARSAguncelle(15, "0", "0", "0", "0");
+                              _veriGonder("14", "0", "0", "0", "0", "0");
+
+                          setState(() {});
+
+                          
+      }
+      
+    });
+  }
 
 //--------------------------METOTLAR--------------------------------
 

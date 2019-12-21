@@ -571,6 +571,11 @@ class KumesOlusturState extends State<KumesOlustur> {
                                               context,
                                               duration: 2);
                                         }else{
+Toast.show(
+                                              "Deneme",
+                                              context,
+                                              duration: 2);
+
 
                                           _veriGonderSifre(
                                                 "2",
@@ -776,6 +781,7 @@ class KumesOlusturState extends State<KumesOlustur> {
     }
 
     print(satirlar);
+    print(dbSatirSayisi.toString());
     setState(() {});
   }
 

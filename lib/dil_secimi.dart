@@ -8,6 +8,7 @@ import 'package:prokos_beta/adetler.dart';
 import 'package:prokos_beta/fan_yontemi.dart';
 import 'package:prokos_beta/kumes_olustur.dart';
 import 'package:prokos_beta/uz_debi_nem.dart';
+import 'package:toast/toast.dart';
 import 'genel/cikis_alert.dart';
 import 'genel/database_helper.dart';
 import 'languages/select.dart';
@@ -121,7 +122,14 @@ class DilSecimiState extends State<DilSecimi> {
             children: <Widget>[
             Spacer(flex: 20,),
             //geri ok
-            Expanded(flex:2,child: IconButton(icon: Icon(Icons.arrow_back_ios),iconSize: 50,onPressed: (){},color: Colors.grey.shade400,)),
+            Expanded(flex:2,child: IconButton(icon: Icon(Icons.arrow_back_ios),iconSize: 50,onPressed: (){
+              
+              for(int i=1;i<=121;i++){
+                                dbHelper.veriSil(i+1000);
+                              }
+                              Toast.show(dbSatirSayisi.toString(), context,duration: 3);
+                              
+            },color: Colors.grey.shade400,)),
             Spacer(flex: 1,),
             //ileri ok
             Expanded(flex: 2,child: IconButton(icon: Icon(Icons.arrow_forward_ios),iconSize: 50,onPressed: (){

@@ -40,9 +40,13 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
 
   
   int onlarF=0;
+  int onlarF1=0;
   int birlerF=0;
+  int birlerF1=0;
   int onlarO=0;
+  int onlarO1=0;
   int birlerO=0;
+  int birlerO1=0;
   int degerNo=0;
   double oran;
   String dilSecimi;
@@ -50,9 +54,13 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
   _DegerGiris2X2X0State.Deger(int x1,int y1 , int x2, int y2, int t, double o,String gelenDil){
     
     onlarF=x1;
+    onlarF1=x1;
     birlerF=y1;
+    birlerF1=y1;
     onlarO=x2;
+    onlarO1=x2;
     birlerO=y2;
+    birlerO1=y2;
     degerNo=t;
     oran=o;
     dilSecimi=gelenDil;
@@ -351,7 +359,7 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
                     Navigator.of(context).pop(deger);
 
                   },
-                  child: Text("ONAY",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Audio wide'),),
+                  child: Text(SelectLanguage().selectStrings(dilSecimi, "btn2"),style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Audio wide'),),
                 ),
 
               ),
@@ -361,10 +369,10 @@ class _DegerGiris2X2X0State extends State<DegerGiris2X2X0> {
                 child: RaisedButton(
                   color: Colors.indigo,
                   onPressed: (){
-                    var deger=[onlarF,birlerF,onlarO,birlerO,degerNo];
+                    var deger=[onlarF1,birlerF1,onlarO1,birlerO1,degerNo];
                     Navigator.of(context).pop(deger);
                   },
-                  child: Text("ÇIKIŞ",style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Audio wide'),),
+                  child: Text(SelectLanguage().selectStrings(dilSecimi, "btn3"),style: TextStyle(color: Colors.white,fontSize: 25,fontFamily: 'Audio wide'),),
                 ),
               ),
 
