@@ -853,7 +853,6 @@ class FanHaritasiState extends State<FanHaritasi> {
 
     if (dbSatirSayisi > 13) {
       if(satirlar[13]["veri1"]=="ok"){
-        veriGonderildi=true;
         String xx=satirlar[13]["veri2"];
         var fHaritalar = xx.split("#");
         for(int i=1;i<=120;i++ ){
@@ -910,6 +909,7 @@ class FanHaritasiState extends State<FanHaritasi> {
       String yy;
       
       if(satirlar[14]["veri1"]=="ok"){
+        veriGonderildi=true;
         xx=satirlar[14]["veri2"];
         yy=satirlar[14]["veri3"];
         var fanNolar=xx.split("#");

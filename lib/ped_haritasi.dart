@@ -8,29 +8,27 @@ import 'package:flutter/rendering.dart';
 import 'package:flutter/widgets.dart';
 import 'package:prokos_beta/adetler.dart';
 import 'package:prokos_beta/mh_yontemi.dart';
-import 'package:prokos_beta/ped_haritasi.dart';
 import 'package:toast/toast.dart';
 import 'genel/alert_reset.dart';
 import 'genel/cikis_alert.dart';
 import 'genel/database_helper.dart';
 import 'genel/deger_giris_2x2x0.dart';
-import 'genel/deger_giris_2x2x2x0.dart';
 import 'genel/deger_giris_3x0.dart';
 import 'languages/select.dart';
 
-class KlepeHaritasi extends StatefulWidget {
+class PedHaritasi extends StatefulWidget {
   String gelenDil;
 
-  KlepeHaritasi(String dil) {
+  PedHaritasi(String dil) {
     gelenDil = dil;
   }
   @override
   State<StatefulWidget> createState() {
-    return KlepeHaritasiState(gelenDil);
+    return PedHaritasiState(gelenDil);
   }
 }
 
-class KlepeHaritasiState extends State<KlepeHaritasi> {
+class PedHaritasiState extends State<PedHaritasi> {
 //++++++++++++++++++++++++++DATABASE DEĞİŞKENLER+++++++++++++++++++++++++++++++
   final dbHelper = DatabaseHelper.instance;
   var dbSatirlar;
@@ -38,38 +36,34 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
   int dbSayac = 0;
   String dilSecimi = "TR";
   String kurulumDurum = "0";
-  List<int> klepeHarita = new List(19);
-  List<bool> klepeVisibility = new List(19);
-  List<int> klepeNo = new List(19);
-  List<int> cikisNoAc = new List(19);
-  List<int> cikisNoKapa = new List(19);
+  List<int> pedHarita = new List(25);
+  List<bool> pedVisibility = new List(25);
+  List<int> pedNo = new List(25);
+  List<int> cikisNo = new List(25);
   bool haritaOnay = false;
-  int klepeAdet = 0;
+  int pedAdet = 0;
 
-  int _onlarklepe = 1;
-  int _birlerklepe = 0;
-  int _onlarOutAc = 3;
-  int _onlarOutKapa = 3;
-  int _birlerOutAc = 3;
-  int _birlerOutKapa = 3;
+  int _onlarped = 1;
+  int _birlerped = 0;
+  int _onlarOut = 3;
+  int _birlerOut = 3;
   int _degerNo = 0;
 
   double _oran1;
   bool veriGonderildi = false;
-  bool klepeNoTekerrur = false;
+  bool pedNoTekerrur = false;
   bool cikisNoTekerrur = false;
 
 //--------------------------DATABASE DEĞİŞKENLER--------------------------------
 
 //++++++++++++++++++++++++++CONSTRUCTER METHOD+++++++++++++++++++++++++++++++
 
-  KlepeHaritasiState(String dil) {
-    for (int i = 1; i <= 18; i++) {
-      klepeHarita[i] = 0;
-      klepeNo[i] = 0;
-      cikisNoAc[i] = 0;
-      cikisNoKapa[i] = 0;
-      klepeVisibility[i] = true;
+  PedHaritasiState(String dil) {
+    for (int i = 1; i <= 24; i++) {
+      pedHarita[i] = 0;
+      pedNo[i] = 0;
+      cikisNo[i] = 0;
+      pedVisibility[i] = true;
     }
 
     dilSecimi = dil;
@@ -110,7 +104,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
             child: Container(
           color: Colors.grey.shade600,
           child: Text(
-            SelectLanguage().selectStrings(dilSecimi, "tv38"), // Klepe Haritası
+            SelectLanguage().selectStrings(dilSecimi, "tv47"), // Ped Haritası
             style: TextStyle(
                 fontFamily: 'Kelly Slab',
                 color: Colors.white,
@@ -120,7 +114,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
           ),
           alignment: Alignment.center,
         )),
-        //klepe Harita Oluşturma Bölümü
+        //ped Harita Oluşturma Bölümü
         Expanded(
           flex: 5,
           child: Container(
@@ -132,7 +126,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                 Spacer(
                   flex: 1,
                 ),
-                //Tüm duvarlar Klepe görünümü
+                //Tüm duvarlar Ped görünümü
                 Expanded(
                   flex: 6,
                   child: Column(
@@ -158,9 +152,9 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                 ),
                               ),
                                 Column(children: <Widget>[
-                                  Visibility(child: _klepeHaritaUnsur(1),visible: klepeVisibility[1] ? true : false,),
-                                  Visibility(child: _klepeHaritaUnsur(2),visible: klepeVisibility[2] ? true : false,),
-                                  Visibility(child: _klepeHaritaUnsur(3),visible: klepeVisibility[3] ? true : false,),
+                                  Visibility(child: _pedHaritaUnsur(1),visible: pedVisibility[1] ? true : false,),
+                                  Visibility(child: _pedHaritaUnsur(2),visible: pedVisibility[2] ? true : false,),
+                                  Visibility(child: _pedHaritaUnsur(3),visible: pedVisibility[3] ? true : false,),
                                 ],)
                               ],)
                             ),
@@ -183,18 +177,26 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                 Row(children: <Widget>[
                                   Expanded(
                                                                       child: Column(children: <Widget>[
-                                    Visibility(child: _klepeHaritaUnsur(4),visible: klepeVisibility[4] ? true : false,),
-                                    Visibility(child: _klepeHaritaUnsur(5),visible: klepeVisibility[5] ? true : false,),
-                                    Visibility(child: _klepeHaritaUnsur(6),visible: klepeVisibility[6] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(4),visible: pedVisibility[4] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(5),visible: pedVisibility[5] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(6),visible: pedVisibility[6] ? true : false,),
                                 ],),
                                   ),
                                 Expanded(
                                                                   child: Column(children: <Widget>[
-                                    Visibility(child: _klepeHaritaUnsur(7),visible: klepeVisibility[7] ? true : false,),
-                                    Visibility(child: _klepeHaritaUnsur(8),visible: klepeVisibility[8] ? true : false,),
-                                    Visibility(child: _klepeHaritaUnsur(9),visible: klepeVisibility[9] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(7),visible: pedVisibility[7] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(8),visible: pedVisibility[8] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(9),visible: pedVisibility[9] ? true : false,),
+                                  ],),
+                                ),
+                                Expanded(
+                                                                  child: Column(children: <Widget>[
+                                    Visibility(child: _pedHaritaUnsur(10),visible: pedVisibility[10] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(11),visible: pedVisibility[11] ? true : false,),
+                                    Visibility(child: _pedHaritaUnsur(12),visible: pedVisibility[12] ? true : false,),
                                   ],),
                                 )
+
                                 ],)
                               ],)
                             ),
@@ -222,9 +224,9 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                 ),
                               ),
                                 Column(children: <Widget>[
-                                  Visibility(child: _klepeHaritaUnsur(16),visible: klepeVisibility[16] ? true : false,),
-                                  Visibility(child: _klepeHaritaUnsur(17),visible: klepeVisibility[17] ? true : false,),
-                                  Visibility(child: _klepeHaritaUnsur(18),visible: klepeVisibility[18] ? true : false,),
+                                  Visibility(child: _pedHaritaUnsur(22),visible: pedVisibility[22] ? true : false,),
+                                  Visibility(child: _pedHaritaUnsur(23),visible: pedVisibility[23] ? true : false,),
+                                  Visibility(child: _pedHaritaUnsur(24),visible: pedVisibility[24] ? true : false,),
                                 ],)
                               ],)
                             ),
@@ -248,16 +250,23 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                   children: <Widget>[
                                     Expanded(
                                                                           child: Column(children: <Widget>[
-                                        Visibility(child: _klepeHaritaUnsur(10),visible: klepeVisibility[10] ? true : false,),
-                                        Visibility(child: _klepeHaritaUnsur(11),visible: klepeVisibility[11] ? true : false,),
-                                        Visibility(child: _klepeHaritaUnsur(12),visible: klepeVisibility[12] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(13),visible: pedVisibility[13] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(14),visible: pedVisibility[14] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(15),visible: pedVisibility[15] ? true : false,),
                                       ],),
                                     ),
                                     Expanded(
                                                                           child: Column(children: <Widget>[
-                                        Visibility(child: _klepeHaritaUnsur(13),visible: klepeVisibility[13] ? true : false,),
-                                        Visibility(child: _klepeHaritaUnsur(14),visible: klepeVisibility[14] ? true : false,),
-                                        Visibility(child: _klepeHaritaUnsur(15),visible: klepeVisibility[15] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(16),visible: pedVisibility[16] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(17),visible: pedVisibility[17] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(18),visible: pedVisibility[18] ? true : false,),
+                                      ],),
+                                    ),
+                                    Expanded(
+                                                                          child: Column(children: <Widget>[
+                                        Visibility(child: _pedHaritaUnsur(19),visible: pedVisibility[19] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(20),visible: pedVisibility[20] ? true : false,),
+                                        Visibility(child: _pedHaritaUnsur(21),visible: pedVisibility[21] ? true : false,),
                                       ],),
                                     ),
                                   ],
@@ -302,21 +311,21 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                           onPressed: () {
                             int sayac = 0;
 
-                            for (int i = 1; i <= 18; i++) {
-                              if (klepeHarita[i] == 1) {
+                            for (int i = 1; i <= 24; i++) {
+                              if (pedHarita[i] == 1) {
                                 sayac++;
                               }
                             }
 
-                            if (sayac < klepeAdet) {
-                              //Haritada seçilen klepe sayısı eksik
+                            if (sayac < pedAdet) {
+                              //Haritada seçilen ped sayısı eksik
                               Toast.show(
                                   SelectLanguage()
                                       .selectStrings(dilSecimi, "toast29"),
                                   context,
                                   duration: 3);
-                            } else if (sayac > klepeAdet) {
-                              //Haritada seçilen klepe sayısı yüksek
+                            } else if (sayac > pedAdet) {
+                              //Haritada seçilen ped sayısı yüksek
                               Toast.show(
                                   SelectLanguage()
                                       .selectStrings(dilSecimi, "toast30"),
@@ -331,24 +340,24 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                   duration: 3);
                               haritaOnay = true;
 
-                              for (int i = 1; i <= 18; i++) {
-                                if (klepeHarita[i] != 0) {
-                                  klepeVisibility[i] = true;
+                              for (int i = 1; i <= 24; i++) {
+                                if (pedHarita[i] != 0) {
+                                  pedVisibility[i] = true;
                                 } else {
-                                  klepeVisibility[i] = false;
+                                  pedVisibility[i] = false;
                                 }
                               }
 
                               String veri = "";
 
-                              for (int i = 1; i <= 18; i++) {
-                                veri = veri + klepeHarita[i].toString() + "#";
+                              for (int i = 1; i <= 24; i++) {
+                                veri = veri + pedHarita[i].toString() + "#";
                               }
                               
                               dbHelper.veriYOKSAekleVARSAguncelle(
-                                  16, "ok", veri, "0", "0");
+                                  18, "ok", veri, "0", "0");
 
-                              _veriGonder("15", "21", veri, "0", "0", "0");
+                              _veriGonder("18", "23", veri, "0", "0", "0");
                               
 
                               setState(() {});
@@ -368,7 +377,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                               Text(
                                 SelectLanguage()
                                     .selectStrings(dilSecimi, "btn4"),
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18),textScaleFactor: oran,
                               ),
                             ],
                           ),
@@ -397,7 +406,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                               Text(
                                 SelectLanguage()
                                     .selectStrings(dilSecimi, "btn5"),
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18),textScaleFactor: oran,
                               ),
                             ],
                           ),
@@ -413,18 +422,17 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                         child: FlatButton(
                           onPressed: () {
                             bool noKontrol = false;
-                            String cikisVeriAc = "";
-                            String cikisVeriKapa = "";
+                            String cikisVeri = "";
                             String noVeri = "";
-                            for (int i = 1; i <= 18; i++) {
-                              if (klepeHarita[i] == 1) {
-                                if (klepeNo[i] == 0 || cikisNoAc[i] == 0 || cikisNoKapa[i] == 0) {
+                            for (int i = 1; i <= 24; i++) {
+                              if (pedHarita[i] == 1) {
+                                if (pedNo[i] == 0 || cikisNo[i] == 0) {
                                   noKontrol = true;
                                 }
                               }
-                              cikisVeriAc = cikisVeriAc + cikisNoAc[i].toString() + "#";
-                              cikisVeriKapa = cikisVeriKapa + cikisNoKapa[i].toString() + "#";
-                              noVeri = noVeri + klepeNo[i].toString() + "#";
+                              cikisVeri =
+                                  cikisVeri + cikisNo[i].toString() + "#";
+                              noVeri = noVeri + pedNo[i].toString() + "#";
                             }
                             if (noKontrol) {
                               Toast.show(
@@ -432,7 +440,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                       .selectStrings(dilSecimi, "toast24"),
                                   context,
                                   duration: 3);
-                            } else if (klepeNoTekerrur) {
+                            } else if (pedNoTekerrur) {
                               Toast.show(
                                   SelectLanguage()
                                       .selectStrings(dilSecimi, "toast28"),
@@ -448,9 +456,9 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                               veriGonderildi = true;
                               
                               _veriGonder(
-                                  "16", "22", noVeri, cikisVeriAc, cikisVeriKapa, "0");
+                                  "19", "24", noVeri, cikisVeri, "0", "0");
                               dbHelper.veriYOKSAekleVARSAguncelle(
-                                  17, "ok", noVeri, cikisVeriAc, cikisVeriKapa);
+                                  19, "ok", noVeri, cikisVeri, "0");
                                   
                             }
                           },
@@ -467,7 +475,7 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                               Text(
                                 SelectLanguage()
                                     .selectStrings(dilSecimi, "btn6"),
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 18),textScaleFactor: oran,
                               ),
                             ],
                           ),
@@ -503,13 +511,13 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                               context,
                               duration: 3);
                         } else {
-
+/*
                         Navigator.push(
                           context,
                           MaterialPageRoute(
-                              builder: (context) => PedHaritasi(dilSecimi)),
+                              builder: (context) => MhYontemi(dilSecimi)),
                         );
-
+*/
 
                         }
                       },
@@ -539,28 +547,28 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
     }
 
     if (dbSatirSayisi > 3) {
-      klepeAdet = int.parse(satirlar[3]["veri2"]);
+      pedAdet = int.parse(satirlar[3]["veri3"]);
     }
 
 
 
-    if (dbSatirSayisi > 15) {
-      if(satirlar[15]["veri1"]=="ok"){
-        String xx=satirlar[15]["veri2"];
+    if (dbSatirSayisi > 17) {
+      if(satirlar[17]["veri1"]=="ok"){
+        String xx=satirlar[17]["veri2"];
         var fHaritalar = xx.split("#");
-        for(int i=1;i<=18;i++ ){
-          klepeHarita[i]=int.parse(fHaritalar[i-1]);
+        for(int i=1;i<=24;i++ ){
+          pedHarita[i]=int.parse(fHaritalar[i-1]);
           if(fHaritalar[i-1]!="0"){
           haritaOnay=true;
       }
       
     }
 
-    for (int i = 1; i <= 18; i++) {
-      if (klepeHarita[i] != 0) {
-        klepeVisibility[i] = true;
+    for (int i = 1; i <= 24; i++) {
+      if (pedHarita[i] != 0) {
+        pedVisibility[i] = true;
       } else {
-        klepeVisibility[i] = false;
+        pedVisibility[i] = false;
       }
     }
 
@@ -568,23 +576,19 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
     
     }
 
-    if (dbSatirSayisi > 16) {
+    if (dbSatirSayisi > 18) {
       String xx;
       String yy;
-      String zz;
       
-      if(satirlar[16]["veri1"]=="ok"){
+      if(satirlar[18]["veri1"]=="ok"){
         veriGonderildi=true;
-        xx=satirlar[16]["veri2"];
-        yy=satirlar[16]["veri3"];
-        zz=satirlar[16]["veri4"];
-        var klepeNolar=xx.split("#");
-        var cikisNolarAc=yy.split("#");
-        var cikisNolarKapa=yy.split("#");
-        for(int i=1;i<=18;i++){
-          klepeNo[i]=int.parse(klepeNolar[i-1]);
-          cikisNoAc[i]=int.parse(cikisNolarAc[i-1]);
-          cikisNoKapa[i]=int.parse(cikisNolarKapa[i-1]);
+        xx=satirlar[18]["veri2"];
+        yy=satirlar[18]["veri3"];
+        var pedNolar=xx.split("#");
+        var cikisNolar=yy.split("#");
+        for(int i=1;i<=24;i++){
+          pedNo[i]=int.parse(pedNolar[i-1]);
+          cikisNo[i]=int.parse(cikisNolar[i-1]);
         }
 
       }
@@ -603,14 +607,14 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
     if (deger == 0) {
       imagePath = 'assets/images/soru_isareti.png';
     } else if (deger == 1) {
-      imagePath = 'assets/images/klepe_harita_icon.png';
+      imagePath = 'assets/images/ped_harita_icon.png';
     } else {
       imagePath = 'assets/images/soru_isareti.png';
     }
     return imagePath;
   }
 
-  Future _degergiris2X2X2X0() async {
+  Future _degergiris2X2X0() async {
     // flutter defined function
 
     await showDialog(
@@ -619,80 +623,59 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
       builder: (BuildContext context) {
         // return object of type Dialog
 
-        return DegerGiris2X2X2X0.Deger(_onlarklepe, _birlerklepe, _onlarOutAc,
-            _birlerOutAc,_onlarOutKapa, _birlerOutKapa, _degerNo, _oran1, dilSecimi,"tv40");
+        return DegerGiris2X2X0.Deger(_onlarped, _birlerped, _onlarOut,
+            _birlerOut, _degerNo, _oran1, dilSecimi,"tv46");
       },
     ).then((val) {
-      if (_onlarklepe != val[0] ||
-          _birlerklepe != val[1] ||
-          _onlarOutAc != val[2] ||
-          _birlerOutAc != val[3] ||
-          _onlarOutKapa != val[4] ||
-          _birlerOutKapa != val[5]) 
-          
-          {
+      if (_onlarped != val[0] ||
+          _birlerped != val[1] ||
+          _onlarOut != val[2] ||
+          _birlerOut != val[3]) {
         veriGonderildi = false;
       }
-      _onlarklepe = val[0];
-      _birlerklepe = val[1];
-      _onlarOutAc = val[2];
-      _birlerOutAc = val[3];
-      _onlarOutKapa = val[4];
-      _birlerOutKapa = val[5];
-      _degerNo = val[6];
+      _onlarped = val[0];
+      _birlerped = val[1];
+      _onlarOut = val[2];
+      _birlerOut = val[3];
+      _degerNo = val[4];
 
-      klepeNo[_degerNo] =
-          int.parse(_onlarklepe.toString() + _birlerklepe.toString());
-      cikisNoAc[_degerNo] = int.parse(_onlarOutAc.toString() + _birlerOutAc.toString());
-      cikisNoKapa[_degerNo] = int.parse(_onlarOutKapa.toString() + _birlerOutKapa.toString());
-      klepeNoTekerrur = false;
+      pedNo[_degerNo] =
+          int.parse(_onlarped.toString() + _birlerped.toString());
+      cikisNo[_degerNo] =
+          int.parse(_onlarOut.toString() + _birlerOut.toString());
+      pedNoTekerrur = false;
       cikisNoTekerrur = false;
 
-      for (int i = 1; i <= 18; i++) {
-        for (int k = 1; k <= 18; k++) {
+      for (int i = 1; i <= 24; i++) {
+        for (int k = 1; k <= 24; k++) {
           if (i != k &&
-              klepeNo[i] == klepeNo[k] &&
-              klepeNo[i] != 0 &&
-              klepeNo[k] != 0) {
-            klepeNoTekerrur = true;
+              pedNo[i] == pedNo[k] &&
+              pedNo[i] != 0 &&
+              pedNo[k] != 0) {
+            pedNoTekerrur = true;
             break;
           }
-          if (klepeNoTekerrur) {
+          if (pedNoTekerrur) {
             break;
           }
           if (i != k &&
-              cikisNoAc[i] == cikisNoAc[k] &&
-              cikisNoAc[i] != 0 &&
-              cikisNoAc[k] != 0) {
-                print("Giriyor1");
+              cikisNo[i] == cikisNo[k] &&
+              cikisNo[i] != 0 &&
+              cikisNo[k] != 0) {
             cikisNoTekerrur = true;
             break;
           }
-
-          if (i != k &&
-              cikisNoKapa[i] == cikisNoKapa[k] &&
-              cikisNoKapa[i] != 0 &&
-              cikisNoKapa[k] != 0) {
-                print("Giriyor2");
-            cikisNoTekerrur = true;
-            break;
-          }
-          if(cikisNoAc[i]==cikisNoKapa[k] && cikisNoAc[i]!=0 && cikisNoKapa[k]!=0){
-            cikisNoTekerrur = true;
-            print("Giriyor3");
+          if (cikisNoTekerrur) {
             break;
           }
         }
-        if (cikisNoTekerrur) {
-            break;
-          }
       }
 
       setState(() {});
     });
   }
 
-  Widget _klepeHaritaUnsur(int indexNo) {
+  Widget _pedHaritaUnsur(int indexNo) {
     return Expanded(
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -703,28 +686,23 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                 onPressed: () {
                   if (haritaOnay) {
 
-                    _onlarklepe = klepeNo[indexNo] < 10
+                    _onlarped = pedNo[indexNo] < 10
                         ? 0
-                        : (klepeNo[indexNo] ~/ 10).toInt();
-                    _birlerklepe = klepeNo[indexNo] % 10;
-                    _onlarOutAc = cikisNoAc[indexNo] < 10
+                        : (pedNo[indexNo] ~/ 10).toInt();
+                    _birlerped = pedNo[indexNo] % 10;
+                    _onlarOut = cikisNo[indexNo] < 10
                         ? 0
-                        : (cikisNoAc[indexNo] ~/ 10).toInt();
-                    _birlerOutAc = cikisNoAc[indexNo] % 10;
-                    _onlarOutKapa = cikisNoKapa[indexNo] < 10
-                        ? 0
-                        : (cikisNoKapa[indexNo] ~/ 10).toInt();
-                    _birlerOutKapa = cikisNoKapa[indexNo] % 10;
+                        : (cikisNo[indexNo] ~/ 10).toInt();
+                    _birlerOut = cikisNo[indexNo] % 10;
                     _degerNo = indexNo;
-                    _degergiris2X2X2X0();
-
+                    _degergiris2X2X0();
                   } else {
 
-                    if (klepeHarita[indexNo] == 0 ||
-                        klepeHarita[indexNo] == null) {
-                      klepeHarita[indexNo] = 1;
-                    }  else if (klepeHarita[indexNo] == 1) {
-                      klepeHarita[indexNo] = 0;
+                    if (pedHarita[indexNo] == 0 ||
+                        pedHarita[indexNo] == null) {
+                      pedHarita[indexNo] = 1;
+                    }  else if (pedHarita[indexNo] == 1) {
+                      pedHarita[indexNo] = 0;
                     }
 
                     setState(() {});
@@ -738,30 +716,30 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                           //color: Colors.pink,
                           image: DecorationImage(
                             alignment: Alignment.center,
-                            image: AssetImage(imageGetir(klepeHarita[indexNo])),
+                            image: AssetImage(imageGetir(pedHarita[indexNo])),
                             fit: BoxFit.contain,
                           ),
                         ),
                       ),
-                      opacity: klepeVisibility[indexNo] &&
+                      opacity: pedVisibility[indexNo] &&
                               haritaOnay &&
-                              klepeHarita[indexNo] == 1
+                              pedHarita[indexNo] == 1
                           ? 1
                           : 1,
                     ),
                     Visibility(
-                      visible: haritaOnay && klepeHarita[indexNo] != 0
+                      visible: haritaOnay && pedHarita[indexNo] != 0
                           ? true
                           : false,
                       child: Visibility(
-                        visible: haritaOnay && klepeHarita[indexNo] == 1
+                        visible: haritaOnay && pedHarita[indexNo] == 1
                             ? true
                             : false,
                         child: Row(
                           children: <Widget>[
-                            Spacer(),
-                            //klepe No
-                            Expanded(flex: 4,
+                            Spacer(flex: 5,),
+                            //ped No
+                            Expanded(flex: 5,
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
@@ -771,8 +749,8 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                         alignment: Alignment.center,
                                         child: AutoSizeText(
                                           SelectLanguage().selectStrings(
-                                                  dilSecimi, "tv39") +
-                                              klepeNo[indexNo].toString(),
+                                                  dilSecimi, "tv45") +
+                                              pedNo[indexNo].toString(),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 50.0,
@@ -787,8 +765,8 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                               ),
                             ),
                             Spacer(),
-                            //Çıkış NoAc
-                            Expanded( flex: 6,
+                            //Çıkış No
+                            Expanded(flex: 5,
                               child: Row(
                                 children: <Widget>[
                                   Expanded(
@@ -798,8 +776,8 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                         alignment: Alignment.center,
                                         child: AutoSizeText(
                                           SelectLanguage().selectStrings(
-                                                  dilSecimi, "tv43") +
-                                              cikisNoAc[indexNo].toString(),
+                                                  dilSecimi, "tv33") +
+                                              cikisNo[indexNo].toString(),
                                           textAlign: TextAlign.center,
                                           style: TextStyle(
                                               fontSize: 50.0,
@@ -813,34 +791,6 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
                                 ],
                               ),
                             ),
-                            Spacer(),
-                            //Çıkış NoKapa
-                            Expanded(flex: 6,
-                              child: Row(
-                                children: <Widget>[
-                                  Expanded(
-                                    flex: 1,
-                                    child: SizedBox(
-                                      child: Container(
-                                        alignment: Alignment.center,
-                                        child: AutoSizeText(
-                                          SelectLanguage().selectStrings(
-                                                  dilSecimi, "tv44") +
-                                              cikisNoKapa[indexNo].toString(),
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(
-                                              fontSize: 50.0,
-                                              fontFamily: 'Kelly Slab'),
-                                          maxLines: 1,
-                                          minFontSize: 8,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            
                             Spacer()
                           ],
                         ),
@@ -909,18 +859,17 @@ class KlepeHaritasiState extends State<KlepeHaritasi> {
     ).then((val) {
       if (val) {
         veriGonderildi = false;
-        for (int i = 1; i <= 18; i++) {
-          klepeHarita[i] = 0;
-          klepeNo[i] = 0;
-          cikisNoAc[i] = 0;
-          cikisNoKapa[i] = 0;
-          klepeVisibility[i] = true;
+        for (int i = 1; i <= 24; i++) {
+          pedHarita[i] = 0;
+          pedNo[i] = 0;
+          cikisNo[i] = 0;
+          pedVisibility[i] = true;
         }
         haritaOnay = false;
 
-        dbHelper.veriYOKSAekleVARSAguncelle(16, "0", "0", "0", "0");
-        dbHelper.veriYOKSAekleVARSAguncelle(17, "0", "0", "0", "0");
-        _veriGonder("17", "0", "0", "0", "0", "0");
+        dbHelper.veriYOKSAekleVARSAguncelle(18, "0", "0", "0", "0");
+        dbHelper.veriYOKSAekleVARSAguncelle(19, "0", "0", "0", "0");
+        _veriGonder("20", "0", "0", "0", "0", "0");
 
         setState(() {});
       }

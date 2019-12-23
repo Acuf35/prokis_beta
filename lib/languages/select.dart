@@ -62,6 +62,13 @@ class SelectLanguage{
     kod=="tv38" ? metin='Klepe Haritası' : null;
     kod=="tv39" ? metin='Klp:' : null;
     kod=="tv40" ? metin='KLEPE NO' : null;
+    kod=="tv41" ? metin='AÇ ÇKŞ NO' : null;
+    kod=="tv42" ? metin='KP ÇKŞ NO' : null;
+    kod=="tv43" ? metin='ÇkşAc:' : null;
+    kod=="tv44" ? metin='ÇkşKp:' : null;
+    kod=="tv45" ? metin='Ped:' : null;
+    kod=="tv46" ? metin='PED NO' : null;
+    kod=="tv47" ? metin='Ped Pompa Haritası' : null;
 
 
    
@@ -202,6 +209,13 @@ class SelectLanguage{
     kod=="tv38" ? metin='Klepe Map' : null;
     kod=="tv39" ? metin='Klp:' : null;
     kod=="tv40" ? metin='KLEPE NO' : null;
+    kod=="tv41" ? metin='OP. OUT NO' : null;
+    kod=="tv42" ? metin='CL. OUT NO' : null;
+    kod=="tv43" ? metin='OutOp:' : null;
+    kod=="tv44" ? metin='OutCl:' : null;
+    kod=="tv45" ? metin='Ped:' : null;
+    kod=="tv46" ? metin='PED NO' : null;
+    kod=="tv47" ? metin='Ped Pump Map' : null;
 
     
 
